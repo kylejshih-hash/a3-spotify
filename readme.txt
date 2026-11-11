@@ -29,3 +29,4 @@
 
 6. Is there anything special we need to know in order to run your code?
 
+Install the dependencies in both `client` and the provided dummy webserver with `npm install`. The dummy webserver is at `/Users/joshji/Downloads/dummy_webserver`; use it instead of the OAuth-based `webserver` folder included here. In one terminal, run `cd /Users/joshji/Downloads/dummy_webserver && npm start` to start the server on `127.0.0.1:8888`. In another terminal, run `cd /Users/joshji/a3-spotify/client && npm start` to start the Angular client (normally at `http://localhost:4200`).
