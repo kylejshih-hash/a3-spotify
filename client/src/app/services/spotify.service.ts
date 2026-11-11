@@ -25,7 +25,7 @@ export class SpotifyService {
     return firstValueFrom(this.http.get(uri)).then((response) => {
       return response;
     }, (err) => {
-      return err;
+      throw err;
     });
   }
 
@@ -69,17 +69,20 @@ getAlbumsForArtist(artistId:string):Promise<AlbumData[]> {
 }
 
   getAlbum(albumId:string):Promise<AlbumData> {
-    //TODO: use the album endpoint to make a request to express.
-    return null as any;
+    return this.sendRequestToExpress('/album/' + encodeURIComponent(albumId)).then((data) => {
+      return new AlbumData(data);
+    });
   }
 
   getTracksForAlbum(albumId:string):Promise<TrackData[]> {
-    //TODO: use the tracks for album endpoint to make a request to express.
-    return null as any;
+    return this.sendRequestToExpress('/album-tracks/' + encodeURIComponent(albumId)).then((data) => {
+      return data.items.map((track:any) => new TrackData(track));
+    });
   }
 
   getTrack(trackId:string):Promise<TrackData> {
-    //TODO: use the track endpoint to make a request to express.
-    return null as any;
+    return this.sendRequestToExpress('/track/' + encodeURIComponent(trackId)).then((data) => {
+      return new TrackData(data);
+    });
   }
 }
