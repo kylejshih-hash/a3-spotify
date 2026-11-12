@@ -11,16 +11,22 @@ import { SpotifyService } from '../../services/spotify.service';
     standalone: false
 })
 export class AlbumPageComponent implements OnInit {
-	albumId:string;
-	album:AlbumData;
-	tracks:TrackData[];
+	albumId: string = '';
+	album: AlbumData | null = null;
+	tracks: TrackData[] | null = null;
 
 
   constructor(private route: ActivatedRoute, private spotifyService: SpotifyService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.albumId = params.get('id');
+      const albumId = params.get('id');
+      if (albumId === null) {
+        console.error('Album route is missing its required id parameter.');
+        return;
+      }
+
+      this.albumId = albumId;
       this.album = null;
       this.tracks = null;
 

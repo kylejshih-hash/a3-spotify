@@ -10,14 +10,20 @@ import { SpotifyService } from '../../services/spotify.service';
     standalone: false
 })
 export class TrackPageComponent implements OnInit {
-	trackId:string;
-	track:TrackData;
+	trackId: string = '';
+	track: TrackData | null = null;
 
   constructor(private route: ActivatedRoute, private spotifyService: SpotifyService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.trackId = params.get('id');
+      const trackId = params.get('id');
+      if (trackId === null) {
+        console.error('Track route is missing its required id parameter.');
+        return;
+      }
+
+      this.trackId = trackId;
       this.track = null;
 
       this.spotifyService.getTrack(this.trackId).then((track) => {
